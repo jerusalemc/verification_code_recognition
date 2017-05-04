@@ -25,17 +25,17 @@ if (pageType === false) {
     document.body.appendChild(canvas);
     ctx.drawImage(image, 0, 0);
     for (var i = 0; i < 4; i++) {
-    var pixels = ctx.getImageData(10 * i + 3, 2, 8, 15).data;
-    var ldString = "";
-    for (var j = 0, length = pixels.length; j < length; j += 4) {
-        ldString = ldString + (+(pixels[j] * 0.3 + pixels[j + 1] * 0.59 + pixels[j + 2] * 0.11 >= 140));
-    }
-    var comms = numbers.map(function (value) {                      //为了100%识别率,这里不能直接判断是否和模板字符串相等,因为可能有个别0被计算成1,或者相反
-        return ldString.split("").filter(function (v, index) {
-            return value[index] === v;
-        }).length;
-    });
-    captcha += comms.indexOf(Math.max.apply(null, comms));          //添加到识别好的验证码中
-}
-document.querySelector("input[name=T3]").value = captcha; //写入目标文本框
+        var pixels = ctx.getImageData(10 * i + 3, 2, 8, 15).data;
+        var ldString = "";
+        for (var j = 0, length = pixels.length; j < length; j += 4) {
+            ldString = ldString + (+(pixels[j] * 0.3 + pixels[j + 1] * 0.59 + pixels[j + 2] * 0.11 >= 140));
+        } 
+        var comms = numbers.map(function (value) {                     //为了100%识别率,这里不能直接判断是否和模板字符串相等,因为可能有个别0被计算成1,或者相反
+            return ldString.split("").filter(function (v, index) {
+                return value[index] === v;
+            }).length;
+        });
+        captcha += comms.indexOf(Math.max.apply(null, comms));          //添加到识别好的验证码中
+    }  
+    document.querySelector("input[name=T3]").value = captcha; //写入目标文本框
 }
